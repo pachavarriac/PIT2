@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmatica — Tu salud, nuestra prioridad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue:      #1A3A6B;
+      --blue-mid:  #2B5FC0;
+      --green:     #3CB649;
+      --green-dark:#2A8E35;
+      --yellow:    #F7C94B;
+      --white:     #FFFFFF;
+      --bg:        #F5F7FA;
+      --text:      #1C2B3A;
+      --muted:     #6B7A8D;
+      --radius:    12px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text); line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--blue);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6%;
+      box-shadow: 0 2px 12px rgba(26,58,107,.3);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; padding: 10px 0; text-decoration: none; }
+    .nav-logo img { height: 80px; width: 80px; object-fit: contain; border-radius: 25%; background: white; padding: 3px; }
+    .nav-logo-text { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--white); }
+    .nav-logo-text span { color: var(--green); }
+    nav ul { list-style: none; display: flex; gap: 6px; }
+    nav ul li a {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-family: 'Nunito', sans-serif; font-weight: 600; font-size: .93rem;
+      padding: 8px 14px; border-radius: 8px; transition: background .2s;
+    }
+    nav ul li a:hover { background: rgba(255,255,255,.12); color: var(--white); }
+    .btn-nav { background: var(--green) !important; color: var(--white) !important; font-weight: 700 !important; }
+    .btn-nav:hover { background: var(--green-dark) !important; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--blue) 0%, #1e4d9b 55%, #1a5f3a 100%);
+      min-height: 88vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; padding: 60px 8%; gap: 40px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-copy { position: relative; }
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(247,201,75,.2); color: var(--yellow);
+      border: 1px solid rgba(247,201,75,.4);
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .78rem;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      color: var(--white); line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero h1 em { color: var(--green); font-style: normal; }
+    .hero p { color: rgba(255,255,255,.78); font-size: 1.05rem; max-width: 480px; margin-bottom: 36px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green); color: var(--white);
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+      padding: 14px 30px; border-radius: 10px; border: none; cursor: pointer;
+      text-decoration: none; display: inline-block;
+      transition: background .2s, transform .15s;
+      box-shadow: 0 4px 14px rgba(60,182,73,.4);
+    }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem;
+      padding: 13px 28px; border-radius: 10px;
+      border: 2px solid rgba(255,255,255,.4);
+      text-decoration: none; display: inline-block;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.08); }
+    .hero-mascot { display: flex; align-items: center; justify-content: center; position: relative; }
+    .hero-mascot img {
+      width: min(360px, 100%);
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,.35));
+      animation: mascot-float 3.5s ease-in-out infinite;
+    }
+    @keyframes mascot-float {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50%       { transform: translateY(-16px) rotate(1deg); }
+    }
+    .hero-bubble {
+      position: absolute; top: 10%; right: 0;
+      background: var(--white); border-radius: 14px;
+      padding: 10px 16px; box-shadow: 0 6px 20px rgba(0,0,0,.15);
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .85rem;
+      color: var(--blue); max-width: 165px; text-align: center;
+      animation: bubble-pop .5s ease .8s both;
+    }
+    .hero-bubble::after {
+      content: ''; position: absolute; bottom: -8px; left: 24px;
+      border: 8px solid transparent; border-top-color: var(--white);
+    }
+    @keyframes bubble-pop {
+      from { opacity: 0; transform: scale(.6) translateY(10px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* STRIP */
+    .strip { background: var(--green); display: flex; justify-content: center; flex-wrap: wrap; }
+    .strip-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 30px; color: var(--white);
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .9rem;
+      border-right: 1px solid rgba(255,255,255,.25);
+    }
+    .strip-item:last-child { border-right: none; }
+    .strip-icon { font-size: 1.2rem; }
+
+    /* SECTIONS */
+    section { padding: 80px 8%; }
+    .section-label {
+      font-family: 'Nunito', sans-serif; font-weight: 700;
+      font-size: .78rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--green); margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      color: var(--blue); line-height: 1.2; margin-bottom: 14px;
+    }
+    .section-sub { color: var(--muted); font-size: 1rem; max-width: 540px; }
+
+    /* SERVICIOS */
+    #servicios { background: var(--bg); }
+    .servicios-header { text-align: center; margin-bottom: 50px; }
+    .servicios-header .section-sub { margin: 0 auto; }
+    .servicios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .servicio-card {
+      background: var(--white); border-radius: var(--radius); padding: 32px 24px;
+      text-align: center; border: 1px solid rgba(26,58,107,.08);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .servicio-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(26,58,107,.1); }
+    .servicio-icon {
+      width: 64px; height: 64px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; margin: 0 auto 18px;
+    }
+    .servicio-card h3 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--blue); margin-bottom: 8px; }
+    .servicio-card p { color: var(--muted); font-size: .9rem; line-height: 1.55; }
+
+    /* PRODUCTOS */
+    .productos-header { margin-bottom: 44px; }
+    .categorias-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+    .categoria-card {
+      border-radius: var(--radius); padding: 28px 20px; text-align: center;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+      cursor: pointer; transition: transform .2s, filter .2s; color: var(--white);
+    }
+    .categoria-card:hover { transform: scale(1.04); filter: brightness(1.1); }
+    .categoria-card .cat-icon { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+
+    /* ZONAS */
+    #zonas { background: var(--blue); }
+    .zonas-header { text-align: center; margin-bottom: 50px; }
+    .zonas-header .section-title { color: var(--white); }
+    .zonas-header .section-sub { color: rgba(255,255,255,.7); margin: 0 auto; }
+    .zonas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+    .zona-card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--radius); padding: 32px 24px; text-align: center;
+    }
+    .zona-num { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 3rem; color: var(--yellow); line-height: 1; margin-bottom: 8px; }
+    .zona-card h3 { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--white); margin-bottom: 8px; }
+    .zona-card p { color: rgba(255,255,255,.65); font-size: .88rem; }
+
+    /* CTA */
+    #contacto {
+      background: linear-gradient(135deg, #1a5f3a 0%, var(--blue) 100%);
+      text-align: center; padding: 80px 8%;
+    }
+    #contacto .section-title { color: var(--white); margin-bottom: 12px; }
+    #contacto .section-sub { color: rgba(255,255,255,.75); margin: 0 auto 36px; }
+    .cta-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-white {
+      background: var(--white); color: var(--blue);
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+      padding: 14px 30px; border-radius: 10px; border: none;
+      text-decoration: none; display: inline-block;
+      transition: transform .15s;
+    }
+    .btn-white:hover { transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: #0F2444; padding: 48px 8% 28px; color: rgba(255,255,255,.6); }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand p { font-size: .88rem; margin-top: 12px; line-height: 1.6; }
+    .footer-col h4 { font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--white); font-size: .95rem; margin-bottom: 14px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { color: rgba(255,255,255,.6); text-decoration: none; font-size: .88rem; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--green); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.1); padding-top: 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .82rem; flex-wrap: wrap; gap: 8px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 50px 6%; }
+      .hero-mascot { order: -1; }
+      .hero-mascot img { width: min(260px, 80%); }
+      .hero p { margin: 0 auto 28px; }
+      nav ul { display: none; }
+      .zonas-grid { grid-template-columns: 1fr; max-width: 340px; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="Logo Farmatica" />
+    <span class="nav-logo-text">Farm<span>a</span>tica</span>
+  </a>
+  <ul>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#zonas">Sucursales</a></li>
+    <li><a href="#contacto" class="btn-nav">Contáctenos</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-copy">
+    <span class="hero-eyebrow">🏥 Red de 75 farmacias en Costa Rica</span>
+    <h1>Tu salud está en <em>buenas manos</em></h1>
+    <p>Medicamentos, productos de salud y asesoría farmacéutica profesional en la sucursal más cercana a vos.</p>
+    <div class="hero-actions">
+      <a href="#productos" class="btn-primary">Ver productos</a>
+      <a href="#zonas" class="btn-outline">Encontrar sucursal</a>
+    </div>
+  </div>
+  <div class="hero-mascot">
+    <div class="hero-bubble">¡Tu farmacia de confianza! 💊</div>
+    <img src="ChatGPT_Image_19_may_2026__11_06_28_p_m_.png" alt="Mascota Farmatica" />
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-item"><span class="strip-icon">⏰</span> Abierto 24/7 en sucursales selectas</div>
+  <div class="strip-item"><span class="strip-icon">🚚</span> Entrega a domicilio disponible</div>
+  <div class="strip-item"><span class="strip-icon">💳</span> Aceptamos CCSS y seguros</div>
+  <div class="strip-item"><span class="strip-icon">📲</span> Consulta en línea</div>
+</div>
+
+<section id="servicios">
+  <div class="servicios-header">
+    <div class="section-label">Lo que hacemos</div>
+    <h2 class="section-title">Servicios para tu bienestar</h2>
+    <p class="section-sub">Más allá de vender medicamentos, te acompañamos en cada etapa de tu salud.</p>
+  </div>
+  <div class="servicios-grid">
+    <div class="servicio-card">
+      <div class="servicio-icon" style="background:#EBF5FF;">💊</div>
+      <h3>Dispensación de Medicamentos</h3>
+      <p>Recetas nacionales e internacionales atendidas por farmacéuticos certificados.</p>
+    </div>
+    <div class="servicio-card">
+      <div class="servicio-icon" style="background:#EDFBEF;">🩺</div>
+      <h3>Asesoría Farmacéutica</h3>
+      <p>Orientación profesional sobre dosis, interacciones y alternativas terapéuticas.</p>
+    </div>
+    <div class="servicio-card">
+      <div class="servicio-icon" style="background:#FFF8E7;">🧪</div>
+      <h3>Pruebas Rápidas</h3>
+      <p>Glucosa, presión arterial, colesterol y más sin necesidad de cita previa.</p>
+    </div>
+    <div class="servicio-card">
+      <div class="servicio-icon" style="background:#F3EEFF;">🏠</div>
+      <h3>Entrega a Domicilio</h3>
+      <p>Pedí desde la app o por WhatsApp y recibí en la puerta de tu casa el mismo día.</p>
+    </div>
+    <div class="servicio-card">
+      <div class="servicio-icon" style="background:#FFE9E9;">❤️</div>
+      <h3>Programa de Fidelidad</h3>
+      <p>Acumulá puntos en cada compra y canjeá descuentos en productos seleccionados.</p>
+    </div>
+    <div class="servicio-card">
+      <div class="servicio-icon" style="background:#E9F9FF;">🌿</div>
+      <h3>Medicina Natural</h3>
+      <p>Amplio catálogo de suplementos, vitaminas y productos de medicina alternativa.</p>
+    </div>
+  </div>
+</section>
+
+<section id="productos">
+  <div class="productos-header">
+    <div class="section-label">Catálogo</div>
+    <h2 class="section-title">Encontrá lo que necesitás</h2>
+    <p class="section-sub">Más de 8,000 productos disponibles en nuestras sucursales y tienda en línea.</p>
+  </div>
+  <div class="categorias-grid">
+    <div class="categoria-card" style="background:linear-gradient(135deg,#2B5FC0,#1A3A6B);">
+      <span class="cat-icon">💊</span>Medicamentos
+    </div>
+    <div class="categoria-card" style="background:linear-gradient(135deg,#3CB649,#2A8E35);">
+      <span class="cat-icon">🌿</span>Vitaminas & Suplementos
+    </div>
+    <div class="categoria-card" style="background:linear-gradient(135deg,#F7A94B,#E07A10);">
+      <span class="cat-icon">🧴</span>Cuidado Personal
+    </div>
+    <div class="categoria-card" style="background:linear-gradient(135deg,#9B5FCF,#6A2BAB);">
+      <span class="cat-icon">👶</span>Bebés & Mamás
+    </div>
+    <div class="categoria-card" style="background:linear-gradient(135deg,#D94B4B,#A61F1F);">
+      <span class="cat-icon">❤️</span>Salud Cardiovascular
+    </div>
+    <div class="categoria-card" style="background:linear-gradient(135deg,#2BBDB6,#1A857F);">
+      <span class="cat-icon">🦷</span>Higiene Bucal
+    </div>
+    <div class="categoria-card" style="background:linear-gradient(135deg,#F7C94B,#C89500);">
+      <span class="cat-icon">🔬</span>Diagnóstico en Casa
+    </div>
+    <div class="categoria-card" style="background:linear-gradient(135deg,#5F7A8D,#334455);">
+      <span class="cat-icon">🩹</span>Primeros Auxilios
+    </div>
+  </div>
+</section>
+
+<section id="zonas">
+  <div class="zonas-header">
+    <div class="section-label" style="color:var(--yellow);">Presencia nacional</div>
+    <h2 class="section-title">75 sucursales en todo el país</h2>
+    <p class="section-sub">Presentes en las tres zonas geográficas de Costa Rica para que siempre tengás una Farmatica cerca.</p>
+  </div>
+  <div class="zonas-grid">
+    <div class="zona-card">
+      <div class="zona-num">25</div>
+      <h3>Zona Central</h3>
+      <p>San José, Alajuela, Heredia y Cartago</p>
+    </div>
+    <div class="zona-card">
+      <div class="zona-num">28</div>
+      <h3>Zona Pacífico</h3>
+      <p>Puntarenas, Guanacaste y Zona Sur</p>
+    </div>
+    <div class="zona-card">
+      <div class="zona-num">22</div>
+      <h3>Zona Atlántico</h3>
+      <p>Limón y la vertiente Caribe</p>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="section-label" style="color:var(--yellow);text-align:center;">¿Necesitás ayuda?</div>
+  <h2 class="section-title">Estamos para atenderte</h2>
+  <p class="section-sub">Consultá por WhatsApp, llamá a la sucursal más cercana o visitanos en persona.</p>
+  <div class="cta-actions">
+    <a href="https://wa.me/50688888888" class="btn-primary">💬 WhatsApp</a>
+    <a href="tel:+50622222222" class="btn-white">📞 Llamar ahora</a>
+    <a href="#zonas" class="btn-outline">📍 Ver sucursales</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="nav-logo-text" style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.4rem;color:white;">Farm<span style="color:var(--green)">a</span>tica</span>
+      <p>Tu farmacia de confianza en Costa Rica. Más de 20 años cuidando la salud de las familias costarricenses.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="#">Dispensación</a></li>
+        <li><a href="#">Entregas a domicilio</a></li>
+        <li><a href="#">Pruebas rápidas</a></li>
+        <li><a href="#">Asesoría farmacéutica</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="#">Sobre Farmatica</a></li>
+        <li><a href="#">Sucursales</a></li>
+        <li><a href="#">Trabaja con nosotros</a></li>
+        <li><a href="#">Noticias</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Correo electrónico</a></li>
+        <li><a href="#">Redes sociales</a></li>
+        <li><a href="#">Atención al cliente</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Farmatica S.A. — Tu salud, nuestra prioridad.</span>
+    <span>Reg. CCSS · Colegio de Farmacéuticos de Costa Rica</span>
+  </div>
+</footer>
+
+</body>
+</html>
